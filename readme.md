@@ -60,6 +60,8 @@ The main layout builder lets you place these atom kinds directly on the canvas:
 
 If you need `switch-point`, `signal`, `crossing-45`, or `crossing-90`, put them in a template instead.
 
+There is a strict 1 track atom per grid square rule. Do not layer switch points, straight track, diagonal track, or angled track on the same grid square.
+
 To place one:
 
 1. Drag the atom from the palette.
@@ -138,7 +140,7 @@ The context menu typically offers:
 - `Edit template` for custom template instances
 
 ### Documentation Checkpoint
-Make a note of the word “wayside.” You’ll need it later.
+Make a note of the word "wayside." You'll need it later.
 
 ## 7. Use Templates
 
@@ -397,7 +399,7 @@ These rules make layouts easier to read across the whole app.
 - Westbound routes should read left on the page and go up to new rows as they go further west.
 - Eastbound routes should read right on the page and go down to new rows as they go further east.
 - Northbound routes should generally read upward on the page and go to the right as they go further north.
-- Southbound routes should generally read downward on the page and go to the left as they go further north
+- Southbound routes should generally read downward on the page and go to the left as they go further south.
 
 - Features that are not directly related to signaling or routing, such as unsignaled sidings or industrial spurs, should generally be left out. Include those only when they are important for understanding the layout.
 
