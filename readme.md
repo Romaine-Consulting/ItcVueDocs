@@ -1,70 +1,159 @@
 # Layout Guide for Beta Testers
 
-This guide explains how to build a new route layout by editing the active layout file in `Server/Data`.
+This guide explains how to view layouts, enter the layout builder, create new layouts, place atoms, build templates, and map the live indexes that drive the UI.
 
-Use the separate reference layout in that same folder as a working example of supported patterns. Do not edit the reference layout in place. Start a fresh layout in the active file, then copy and adapt small pieces from the reference when you need an example.
+## 1. Open and Display a Layout
 
-This guide only covers patterns already shown in the current reference layout.
+1. Start the app.
+2. Open the browser page.
+3. Use the layout drop-down in the top bar to choose the layout you want to view.
 
-## Start the App
+That is the short version. In normal monitor mode you are mostly just selecting a layout and watching it update.
 
-Beta users receive a built package. You do not need source code tools, Node, npm, Visual Studio, or the .NET SDK to edit and test a layout.
+![Monitor mode screenshot](./images/layout-guide/monitor-mode.png)
 
-To start the app:
+## 2. Enter Layout Builder
 
-1. Open the package folder.
-2. Click `Server.exe`.
-3. Open the browser page at `http://localhost:576`.
+To edit the current layout, click `Layout builder` in the top bar.
 
-The layout file you will edit is:
+To leave the builder, click `Close builder` in the builder header. You can also return to monitor mode with the top bar button labeled `Return to monitor` after entering builder mode.
 
-```text
-Server/Data/currentLayout.json
-```
+![Layout builder entry screenshot](./images/layout-guide/builder-entry.png)
 
-The app loads that file when the browser asks for the layout. After you change and save `currentLayout.json`, refresh the browser page. You do not need to restart `Server.exe` for normal layout edits.
+## 3. Start a New Layout
 
-There is also a railroad configuration file:
+While in the builder, click `New layout`.
 
-```text
-Server/Data/railroadConfig.json
-```
+The app will prompt for:
 
-Most layout work is done in `currentLayout.json`. Use `railroadConfig.json` only when the packet order for a railroad needs to be configured.
+1. Layout name
+2. Canvas width in cells
+3. Canvas height in cells
 
-## Read the File from Top to Bottom
+After that, the new layout opens in monitor mode. You will need to enter `Layout builder` again before placing items.
 
-The layout file has three main parts: overall layout settings, reusable templates, and placed layout items.
+The new layout starts with the default signal stop values used by the app, and you can change them later in the layout settings panel.
 
-### Overall Layout Settings
+## 4. Builder Basics
 
-At the top of the file you will see settings like these:
+The builder gives you three things:
 
-```json
-{
-  "id": "UP Moffatt Tunnel Subdivision East",
-  "canvasWidth": 82,
-  "canvasHeight": 61,
-  "showGridLines": false,
-  "signalStopValues": [14, 15, 30]
-}
-```
+- the palette for placing items
+- the canvas for arranging them
+- the inspector for changing the selected item
 
-These describe the whole drawing area.
+The top bar gives you `Save layout`, `New layout`, and `Close builder`.
 
-- `id` is the layout name.
-- `canvasWidth` is the number of grid spaces across.
-- `canvasHeight` is the number of grid spaces tall.
-- `showGridLines` shows or hides the grid.
-- `signalStopValues` lists the raw signal values that should display as red. Other demonstrated signal values display as green.
+Save writes the current layout back to the server and returns you to monitor mode.
 
-Turning grid lines on can help while editing. When grid lines are on, right-clicking the layout shows the grid coordinate. If you right-click inside a template, it also shows that spot's position relative to the template.
+![Palette and canvas screenshot](./images/layout-guide/builder-overview.png)
 
-### Reusable Templates
+## 5. Place Main Layout Atoms
 
-The `templates` section contains reusable control point patterns. A template is a small drawing made from track, switch, signal, connector, crossing, and label pieces.
+The main layout builder lets you place these atom kinds directly on the canvas:
 
-The reference layout demonstrates simple standard patterns such as:
+- `track`
+- `label`
+- `diagonal`
+- `angled`
+- `portal`
+
+If you need `switch-point`, `signal`, `crossing-45`, or `crossing-90`, put them in a template instead.
+
+To place one:
+
+1. Drag the atom from the palette.
+2. Drop it on the canvas.
+3. Select it if you want to change its placement fields in the inspector.
+
+### Common Atom Types
+
+- `track`: straight connected rail
+- `label`: free text on the layout
+- `diagonal`: a diagonal connector
+- `angled`: a corner connector
+- `portal`: a jump from one place to another
+
+### Atom Settings
+
+Atoms are placed on the canvas, and the inspector only shows the placement fields that are available for that atom kind.
+
+#### Track
+
+- `Rotation`
+- `Length`
+- `Block end left`
+- `Block end right`
+
+#### Label
+
+- `Text`
+- `Size`
+- `Color`
+- `Offset X`
+- `Offset Y`
+
+#### Diagonal
+
+- `Flip`
+
+#### Angled
+
+- `Rotation`
+
+#### Portal
+
+- `Pair ID`
+
+### Notes for Atom Fields
+
+- Position is always edited with `X` and `Y`.
+- Leaving a field blank removes the value where the UI allows that behavior.
+
+## 6. Move or Remove Placed Items
+
+Select any item on the canvas to see its inspector fields.
+
+You can then:
+
+- change its `X` and `Y`
+- change its available placement fields
+- duplicate it
+- delete it
+
+If you select multiple items, the inspector switches to bulk mode and shows `Delete all`.
+
+Helpful shortcuts:
+
+- Use the arrow keys to move selected items by one grid cell.
+- Hold `Ctrl` or `Cmd` while selecting to add items to the current selection.
+- Right-click an item to open the context menu.
+
+The context menu typically offers:
+
+- `Select`
+- `Duplicate`
+- `Delete`
+- `Copy`
+- `Edit template` for custom template instances
+
+### Documentation Checkpoint
+Make a note of the word “wayside.” You’ll need it later.
+
+## 7. Use Templates
+
+Templates are reusable patterns that keep a control point together as one unit.
+
+In the builder palette, templates are listed under:
+
+- `Standard`
+- `Custom`
+
+You can drag a template chip onto the canvas to place a new template instance.
+
+### Standard Templates
+
+Standard templates are read only. They are built-in patterns such as:
 
 - `standard-left-up`
 - `standard-left-down`
@@ -72,362 +161,307 @@ The reference layout demonstrates simple standard patterns such as:
 - `standard-right-down`
 - `block-signal-pair`
 
-These are the best starting points for most users. They are small, predictable, and easy to place more than once.
+These are the best starting points for common control points and signal pairs.
 
-The reference layout also includes larger custom examples such as:
+### Custom Templates
 
-- `arvada`
-- `c&s`
-- `pecos`
-- `broadway`
-- `utah`
+Custom templates are patterns you create for a specific location.
 
-Use those as advanced references when you need a larger custom arrangement. They are useful examples, but they are not the best first step for a new layout.
+Use a custom template when several pieces should move together as one reusable unit.
 
-### Placed Layout Items
+### Create a Custom Template
 
-The `items` section is the actual visible layout. This is where templates and connecting pieces are placed on the grid.
+1. Click `+ New template`.
+2. Enter a template name.
+3. The template editor opens.
+4. Add atoms to the template canvas.
+5. Adjust the atom fields in the template inspector.
+6. Click `Done` when you are finished.
 
-For normal layout building, place these directly in `items`:
+### Open a Custom Template for Editing
 
-- `template-instance` for control points and signal pairs
-- `track` for straight connecting runs
-- `portal` for jumps from one row to another
-- `diagonal` and `angled` for short connector pieces
-- `label` for large standalone titles or railroad names
+You can open a custom template in a few ways:
 
-The reference layout also shows raw `signal`, `switch-point`, `crossing-45`, and many smaller labels inside templates. Most users should keep those inside templates so the pieces move together and keep their live mappings.
+- click the edit icon on the template chip
+- double-click the template chip
+- click `Edit template` on a custom template instance in the inspector
 
-## Build a New Location
+Standard templates are read only.
 
-Use a copy-and-adapt workflow.
+## 8. Template Editor
 
-1. Start with a fresh `currentLayout.json`.
-2. Keep the reference layout open as a read-only example.
-3. Pick the simplest reference pattern that matches your location.
-4. Copy one placed `template-instance` into your new `items` list.
-5. Change its `id`, position, visible text, and ItcMon mapping.
-6. Add straight `track` pieces to connect it to the next location.
-7. Save the file and refresh the browser.
+When you open a template, the builder shows a separate template editor overlay.
 
-For a normal single-switch control point, start from one of the standard templates. For a simple pair of block signals, start from `block-signal-pair`.
+This editor has:
 
-A placed template now looks like this:
+- its own canvas
+- its own palette row
+- its own inspector
+- `Delete template`
+- `Done`
+- `Back to layout`
 
-```json
-{
-  "id": "780221903503",
-  "kind": "template-instance",
-  "template": "standard-left-up",
-  "x": 10,
-  "y": 48,
-  "wiu": "780221903503",
-  "signalIndexes": {
-    "sig-st": 3,
-    "sig-t1": 1,
-    "sig-t2": 2
-  },
-  "switchIndexes": {
-    "switch1": 1
-  },
-  "labelTexts": {
-    "label-name": "W East Portal",
-    "label-ds": "DS051"
-  }
-}
-```
+The template editor is where you build the reusable pattern itself, not the placed instance.
 
-When you adapt it:
+### Template Editor Palette
 
-- `id` must be unique in the file.
-- `template` chooses the reusable pattern.
-- `x` and `y` place the pattern on the grid.
-- `wiu` is the control point ID, meaning the ItcMon device this location listens to.
-- `signalIndexes` and `switchIndexes` connect template roles to live ItcMon values.
-- `labelTexts` fills in the visible text roles provided by the template.
+The template editor palette includes the atom types used to compose a template, including the ones that are not available in the main layout builder.
 
-Older examples may use `label` and `subLabel`. The current reference layout uses `labelTexts`, usually with `label-name` for the location name and `label-ds` for the DS number.
+The current UI focuses on:
 
-## Place Connecting Items
+- `track`
+- `switch-point`
+- `signal`
+- `label`
+- `diagonal`
+- `angled`
+- `crossing-45`
+- `crossing-90`
 
-After you place control points with `template-instance`, use direct `items` entries to connect them. This is normal layout assembly, not custom template work.
+### Template Atom Settings
 
-Place these items directly in the `items` section when you need them:
+Template atom fields are similar to normal atom fields, but they are role-based instead of packet-index-based.
 
-- `track` for straight runs between control points
-- `portal` for jumps from one row to another
-- `diagonal` and `angled` for short connector pieces
-- `label` for standalone titles, authorship text, or railroad names
+Every template atom has:
 
-### Straight Track Runs
+- `Role`
+- `X`
+- `Y`
 
-Use `track` items for long straight sections between control points.
+Then the remaining fields depend on the atom kind.
 
-```json
-{ "kind": "track", "id": "main-1", "x": 15, "y": 48, "length": 6 }
-```
+For template switch points, signals, and crossings, the editor exposes the fields needed to define the reusable pattern.
 
-Useful fields:
+For template signals, the editor uses `Track role` instead of `Signal index` or `Track ID`.
 
-- `id` is the unique name for this item.
-- `x` and `y` place the left end on the grid.
-- `length` controls how many grid spaces the track covers.
-- `blockEndLeft` and `blockEndRight` can hide the end bar when a track touches another piece.
+For template labels, the editor uses the label text and placement fields. The visible label text can be supplied later by the placed template instance.
 
-### Portals
+### Template Editing Behavior
 
-Portals let a route continue somewhere else, usually on another row.
+- Select an atom to edit it.
+- Drag an atom to move it.
+- Use `Duplicate` to create another copy.
+- Use `Delete` to remove the selected template atom.
+- Use `Delete all` when you have multiple atoms selected.
 
-```json
-{ "kind": "portal", "id": "portal-b-right", "x": 81, "y": 48, "pairId": "B" }
-```
+The editor keeps roles unique. When you duplicate an atom, the builder assigns a new role automatically.
 
-Each portal needs a matching partner with the same `pairId`. If one portal uses `"pairId": "B"`, the other portal in that pair must also use `"pairId": "B"`.
+### Template Placement and Cleanup
 
-### Diagonal and Angled Connectors
+When you close the template editor, the builder normalizes the template position so the edited content stays anchored cleanly.
 
-The reference layout uses `diagonal` and `angled` pieces for short connections between straight track runs.
+That means you should not worry about the template drifting out of bounds while you edit it.
 
-Useful fields:
+![Template editor screenshot](./images/layout-guide/template-editor.png)
 
-- `x` and `y` place the connector on the grid.
-- `flip` mirrors a diagonal connector.
-- `rotation` turns an angled connector. Use the values demonstrated in the reference layout.
+## 9. Place Template Instances
 
-Use these pieces sparingly. If a standard template already includes the shape you need, place that template first and connect to it with straight track.
+A template instance is a placed copy of a template on the main layout canvas.
 
-### Standalone Labels
+When you drop a template onto the canvas, the inspector shows fields for that instance.
 
-Direct labels are useful for large titles and railroad names. For normal control point labels, prefer template labels and `labelTexts`.
+### Instance Settings
 
-```json
-{
-  "kind": "label",
-  "x": 41,
-  "y": 58,
-  "text": "UP Moffat Tunnel Subdivision - East",
-  "size": "xl",
-  "offsetY": 0.5,
-  "color": "yellow"
-}
-```
+The template instance inspector includes:
 
-Useful fields:
+- `Template`
+- `WIU`
+- `Packet signal count`
+- `Packet switch count`
+- `Signal indexes`
+- `Switch indexes`
+- `Labels`
 
-- `text` is what appears on the screen.
-- `size` can use the demonstrated values `sm`, `md`, `lg`, or `xl`.
-- `color` can use demonstrated values such as `yellow` or `orange`; leave it out for the normal white label color.
-- `offsetX` and `offsetY` nudge the label without changing its grid anchor.
+It may also show `Offset X` and `Offset Y` for template label placement.
 
-Position labels carefully. Labels do not affect routing, but they can visually cover nearby track, signals, or portals.
+### What the Fields Mean
 
-## Build a Custom Template
+- `Template` shows which reusable pattern this instance uses. In the current UI, this field is read-only after placement.
+- `WIU` is the device or control-point ID that the layout listens to.
+- `Packet signal count` defines how many signal packet slots the UI should consider for that instance.
+- `Packet switch count` defines how many switch packet slots the UI should consider for that instance.
+- `Signal indexes` maps template signal roles to packet positions.
+- `Switch indexes` maps template switch roles to packet positions.
+- `Labels` maps template label roles to visible text.
 
-Build or adapt a template when the normal placed items are not enough. A custom template is useful when one location has several signals, switches, labels, crossings, or connector pieces that should move together as one control point.
+### Building a New Instance
 
-For most new routes, do not start here. Begin with the standard templates and direct connecting items first. Study custom templates only when your location needs a larger arrangement that the simple patterns cannot describe.
+When you place a template, the builder tries to prefill the mapping fields with `-1` for unassigned roles.
 
-Inside a template, each piece has:
+That is intentional. It gives you a starting point without forcing a guess.
 
-- `kind`, which says what the piece is
-- `role`, which gives the piece a name inside the template
-- `x` and `y`, which place the piece relative to the template's starting point
+## 10. Map Indexes
 
-Template roles matter because the placed `template-instance` uses those names later in `signalIndexes`, `switchIndexes`, and `labelTexts`.
+Index mapping is what connects the visual layout to the live data stream.
 
-For example, if a template contains a switch with:
-
-```json
-{ "kind": "switch-point", "role": "switch1", "x": 1, "y": 0 }
-```
-
-Then the placed template can map it like this:
-
-```json
-"switchIndexes": { "switch1": 1 }
-```
-
-Signals inside templates should sit next to the track they control. In demonstrated templates, a signal uses `trackRole` to name the track role it controls:
-
-```json
-{
-  "kind": "signal",
-  "role": "sig-t1",
-  "x": 4,
-  "y": 1,
-  "facing": "left",
-  "trackRole": "track-1"
-}
-```
-
-That lets the app connect the visible signal to the right track after the template is placed.
-
-Labels inside templates can either have fixed text or be filled by `labelTexts` in the placed template. The standard templates use roles such as `label-name` and `label-ds` so each placed location can provide its own text.
-
-```json
-{
-  "kind": "label",
-  "role": "label-name",
-  "x": 2,
-  "y": 5,
-  "size": "md",
-  "offsetY": 0.5
-}
-```
-
-The placed template fills it like this:
-
-```json
-"labelTexts": {
-  "label-name": "E Tolland",
-  "label-ds": "DS047"
-}
-```
-
-### Larger Custom Control Points
-
-For larger control points, study the advanced reference templates after you are comfortable with the simple ones.
-
-- `arvada` shows one route fanning into several tracks.
-- `c&s` shows a larger junction with many switch and signal roles.
-- `pecos` shows a compact multi-track section.
-- `broadway` shows another multi-track arrangement with standard signals and labels.
-- `utah` shows a larger junction that includes `crossing-45` pieces.
-
-Copying these requires more care because there are more roles to map and more places where a small coordinate mistake can look like a signal or route problem. Use them as references for how to structure a template, not as the first pattern for most new locations.
-
-### 45-degree Crossings
-
-The demonstrated `crossing-45` pieces are inside the `utah` template. Treat them as advanced template pieces, not normal direct placements.
-
-Useful fields shown in the reference:
-
-- `diagonalDelta` tells the route how the diagonal path changes row as it crosses.
-- `diagonalFlip` mirrors the diagonal part of the crossing.
-
-When copying a crossing pattern, copy the nearby track and connector pieces with it. A crossing is not just a drawing; it also affects route highlighting.
-
-## Map Your ItcMon Values
-
-Templates are not just drawings. They also provide named roles that connect visible pieces to live ItcMon values.
-
-Inside a template, each important piece has a `role`, such as `switch1`, `sig-t1`, or `track-2`. When you place that template, the `signalIndexes` and `switchIndexes` sections say which live ItcMon value belongs to each role.
-
-### Control Point ID
-
-The control point ID is the ItcMon device ID for the layout section.
-
-In the demonstrated layout file, this field is named `wiu`:
-
-```json
-"wiu": "780221903503"
-```
-
-If this value is wrong, the drawing may look broken, stale, or unresponsive even though the coordinates are fine. The section is simply listening to the wrong device.
+This is one of the most important parts of the builder.
 
 ### Signal Indexes
 
-`signalIndexes` maps template signal roles to signal positions from ItcMon.
+Signal indexes map template signal roles to the raw signal positions in the incoming data.
 
-```json
-"signalIndexes": { "sig-st": 3, "sig-t1": 1, "sig-t2": 2 }
-```
+Use the `Signal indexes` section to choose the number for each role.
 
-This means:
+- `1` means first
+- `2` means second
+- `3` means third
+- and so on
 
-- `sig-st` uses the third signal from ItcMon.
-- `sig-t1` uses the first signal from ItcMon.
-- `sig-t2` uses the second signal from ItcMon.
-
-The numbers you enter are 1-based. `1` means first, `2` means second, and `3` means third. The app handles the internal conversion automatically.
+If a role is not used, leave it as `unassigned`.
 
 ### Switch Indexes
 
-`switchIndexes` maps template switch roles to switch positions from ItcMon.
+Switch indexes work the same way, but for switch packet positions.
 
-```json
-"switchIndexes": { "switch1": 1, "switch2": 2 }
+Use the `Switch indexes` section to map each switch role to the correct packet slot.
+
+### Label Texts
+
+Template label roles can be filled with custom text in the `Labels` section.
+
+This is how a reusable template can show different station names, DS numbers, or other labels each time it is placed.
+
+### Hover and Highlight Help
+
+When you focus an index field, the builder highlights the matching atom in the canvas. That makes it easier to confirm you mapped the right role.
+
+### Unassigned Values
+
+Use `-1` for a role that should not be connected to live packet data.
+
+That is normal for a template that contains an optional or unused role.
+
+## 11. Layout Settings
+
+When nothing is selected, the inspector shows the layout settings panel.
+
+These settings apply to the whole layout.
+
+### Name
+
+The layout name shown in the UI.
+
+### Width
+
+The number of grid cells across the canvas.
+
+### Height
+
+The number of grid cells tall the canvas is.
+
+### Grid lines
+
+Turns the editing grid on or off in the builder view.
+
+This is a viewing aid and is not meant to be a layout content setting.
+
+### Stop Signal Values
+
+This field controls which raw signal values should appear as stop or red values in the UI.
+
+Enter the values as a comma-separated list, for example:
+
+```text
+14, 15, 30
 ```
 
-This means:
+### Active timeout and Dim timeout
 
-- `switch1` uses the first switch from ItcMon.
-- `switch2` uses the second switch from ItcMon.
+The builder shows two minute-based timeout settings:
 
-These numbers are also 1-based. Enter them the way an operator or tester would count them from ItcMon data.
+- `Active timeout`
+- `Dim timeout`
 
-### Unmapped Values
+Use these to control how long live state stays fresh before the app treats it as stale and falls back to timeout behavior.
 
-If a template role should not be connected to live data, leave it out or use `-1`.
+If you are unsure about the numbers, leave the defaults in place and only change them if you know the layout needs a different behavior.
 
-```json
-"signalIndexes": {
-  "sig-t1-left": -1,
-  "sig-t2-left": 6
-}
-```
+## 12. Working With the Canvas
 
-The `-1` value means that part is intentionally not connected. This is useful when a larger template includes a signal or switch position that your route does not use.
+The canvas is grid-based, so a few habits make editing much easier:
 
-### Signal Stop Values
+- keep atoms aligned to the grid
+- use the grid lines while building
+- drag items only after selecting the right thing
+- use the context menu for copy, duplicate, and delete
+- watch the inspector as you move between layout items and templates
 
-`signalStopValues` controls which raw signal values count as red. The current reference layout uses:
+The app saves the layout as a single layout definition, so changes to templates and changes to placed items are both part of the same saved work. After a save, the app returns you to monitor mode.
 
-```json
-"signalStopValues": [14, 15, 30]
-```
+## 13. Directional Conventions
 
-If signals appear green when they should be red, or red when they should be green, check this list along with the signal index order.
+These rules make layouts easier to read across the whole app.
 
-### Railroad Packet Order
+- Signals should sit on the right side of the track in the direction of travel.
 
-The client uses `Server/Data/railroadConfig.json` to know whether a railroad sends switch data before signal data. The railroad code comes from the WIU ID.
+- Westbound routes should read left on the page and go up to new rows as they go further west.
+- Eastbound routes should read right on the page and go down to new rows as they go further east.
+- Northbound routes should generally read upward on the page and go to the right as they go further north.
+- Southbound routes should generally read downward on the page and go to the left as they go further north
 
-Most beta testers should not need to change this file during layout drawing. If packets from a railroad decode incorrectly across many locations, check the matching railroad entry before changing every signal or switch index by hand.
+- Features that are not directly related to signaling or routing, such as unsignaled sidings or industrial spurs, should generally be left out. Include those only when they are important for understanding the layout.
 
-## Practical Layout Rules
+These are conventions, not hard physics. Some layouts will not follow perfect cardinal directions, and that is fine when the author makes a reasonable judgment call.
 
-- Signals are wayside devices. Place them next to the track they control.
-- A signal inside a template should use `trackRole` so it attaches to the correct track role.
-- Portal pairs need matching `pairId` values.
-- Route behavior depends on grid positions, not JSON item order.
-- Routes stop at blocking signals and at switches that do not connect for the current switch position.
-- Switches from different WIUs can stop route propagation.
-- Bad WIU IDs, signal mappings, switch mappings, or stop values often look like display problems.
+### Documentation Checkpoint
+Add the word "device" to the word from the earlier checkpoint. DM me that phrase on Discord to confirm that you have thoroughly read this documentation
 
-## Common Mistakes
+## 14. Common Workflows
 
-- Editing the reference layout instead of using it as an example.
-- Copying an item but forgetting to change its `id`.
-- Moving a template without moving the connecting `track` pieces.
-- Pairing only one portal, or giving the two portals different `pairId` values.
-- Expecting JSON order to fix route behavior. Routes follow grid positions, not item order.
-- Using the wrong control point ID in `wiu`.
-- Mapping signals or switches in the wrong order.
-- Forgetting that signal and switch mappings are entered as 1-based numbers.
-- Treating an intentional `-1` as an error, or accidentally leaving a needed role unmapped.
-- Using old `label` and `subLabel` fields instead of current `labelTexts`.
-- Placing labels where they overlap signals, portals, or nearby tracks.
+### Add a New Track Segment
 
-Bad device IDs or mapping values often look like display problems. Before moving track pieces around, check the WIU ID, signal order, switch order, and `signalStopValues`.
+1. Open the builder.
+2. Drag `track` onto the canvas.
+3. Set the length.
+4. Adjust block-end settings if needed.
+5. Move the track until it lines up with neighboring pieces.
 
-## Final Checklist
+### Build a New Control Point from a Template
 
-Before handing off a new or changed layout, confirm:
+1. Place a template instance.
+2. Set the `WIU`.
+3. Map each signal index.
+4. Map each switch index.
+5. Fill in the label text.
+6. Adjust offsets if the labels need a visual nudge.
 
-- Every item `id` is unique where an `id` is used.
-- Coordinates line up cleanly on the grid.
-- Straight tracks connect to the intended template tracks.
-- Signals sit next to the correct tracks.
-- Signal template pieces point to the correct `trackRole`.
-- Each portal has a matching partner with the same `pairId`.
-- Each control point ID in `wiu` matches the intended ItcMon device.
-- Signal index numbers match the real ItcMon signal order.
-- Switch index numbers match the real ItcMon switch order.
-- Unmapped values are intentional, either omitted or set to `-1`.
-- `labelTexts` keys match label roles in the template.
-- `signalStopValues` matches the signal values that should show red.
-- Railroad packet order is correct in `railroadConfig.json` if decode behavior is wrong across a railroad.
-- Labels are positioned carefully and do not cover nearby layout pieces.
+### Turn a Repeated Pattern Into a Custom Template
 
-Start simple, refresh often, and use the reference layout as a catalog of proven examples rather than as the file you edit.
+1. Create a new custom template.
+2. Add the atoms that make up the repeated pattern.
+3. Assign clear, stable roles.
+4. Add switch points, signals, and crossings as needed.
+5. Save the template.
+6. Place instances of that template on the main layout.
+
+## 15. Quick Troubleshooting
+
+If something does not look right, check these first:
+
+- the layout or template was saved and then reopened
+- the WIU is correct
+- the signal and switch indexes are in the right order
+- the label text is mapped to the right role
+- the stop signal values match what the layout expects
+- the item is not simply off the grid or overlapping something else
+
+## 16. Final Checks
+
+Before you consider the layout done, verify:
+
+- the layout opens in monitor mode
+- the layout enters builder mode cleanly
+- any new layout saves without errors
+- every item has the correct position and field values
+- template instances have the correct WIU and index mapping
+- templates open and close correctly
+- labels are readable and do not cover nearby track
+- the layout still looks correct after saving and reloading
+
+If something looks wrong, the most common causes are:
+
+- a bad WIU
+- a signal or switch index mapped to the wrong number
+- an unintentional `-1`
+- a label that overlaps nearby items
+- a template edited without updating its placed instances
