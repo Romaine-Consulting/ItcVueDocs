@@ -2,7 +2,17 @@
 
 This guide explains how to view layouts, enter the layout builder, create new layouts, place atoms, build templates, and map the live indexes that drive the UI.
 
-## 1. Open and Display a Layout
+## 1. Start the App
+
+If this is your first time opening the package:
+
+1. Unzip the package.
+2. Open the extracted folder.
+3. Run `Server.exe`.
+
+After the server starts, open the app in the browser at `http://localhost:576`.
+
+## 2. Open and Display a Layout
 
 1. Start the app.
 2. Open the browser page.
@@ -12,7 +22,7 @@ That is the short version. In normal monitor mode you are mostly just selecting 
 
 ![Monitor mode screenshot](./images/layout-guide/monitor-mode.png)
 
-## 2. Enter Layout Builder
+## 3. Enter Layout Builder
 
 To edit the current layout, click `Layout builder` in the top bar.
 
@@ -20,7 +30,7 @@ To leave the builder, click `Close builder` in the builder header. You can also 
 
 ![Layout builder entry screenshot](./images/layout-guide/builder-entry.png)
 
-## 3. Start a New Layout
+## 4. Start a New Layout
 
 While in the builder, click `New layout`.
 
@@ -34,7 +44,7 @@ After that, the new layout opens in monitor mode. You will need to enter `Layout
 
 The new layout starts with the default signal stop values used by the app, and you can change them later in the layout settings panel.
 
-## 4. Builder Basics
+## 5. Builder Basics
 
 The builder gives you three things:
 
@@ -48,7 +58,7 @@ Save writes the current layout back to the server and returns you to monitor mod
 
 ![Palette and canvas screenshot](./images/layout-guide/builder-overview.png)
 
-## 5. Place Main Layout Atoms
+## 6. Place Main Layout Atoms
 
 The main layout builder lets you place these atom kinds directly on the canvas:
 
@@ -112,7 +122,7 @@ Atoms are placed on the canvas, and the inspector only shows the placement field
 - Position is always edited with `X` and `Y`.
 - Leaving a field blank removes the value where the UI allows that behavior.
 
-## 6. Move or Remove Placed Items
+## 7. Move or Remove Placed Items
 
 Select any item on the canvas to see its inspector fields.
 
@@ -142,7 +152,7 @@ The context menu typically offers:
 ### Documentation Checkpoint
 Make a note of the word "wayside." You'll need it later.
 
-## 7. Use Templates
+## 8. Use Templates
 
 Templates are reusable patterns that keep a control point together as one unit.
 
@@ -190,7 +200,7 @@ You can open a custom template in a few ways:
 
 Standard templates are read only.
 
-## 8. Template Editor
+## 9. Template Editor
 
 When you open a template, the builder shows a separate template editor overlay.
 
@@ -256,7 +266,7 @@ That means you should not worry about the template drifting out of bounds while 
 
 ![Template editor screenshot](./images/layout-guide/template-editor.png)
 
-## 9. Place Template Instances
+## 10. Place Template Instances
 
 A template instance is a placed copy of a template on the main layout canvas.
 
@@ -292,7 +302,7 @@ When you place a template, the builder tries to prefill the mapping fields with 
 
 That is intentional. It gives you a starting point without forcing a guess.
 
-## 10. Map Indexes
+## 11. Map Indexes
 
 Index mapping is what connects the visual layout to the live data stream.
 
@@ -333,7 +343,7 @@ Use `-1` for a role that should not be connected to live packet data.
 
 That is normal for a template that contains an optional or unused role.
 
-## 11. Layout Settings
+## 12. Layout Settings
 
 When nothing is selected, the inspector shows the layout settings panel.
 
@@ -378,7 +388,7 @@ Use these to control how long live state stays fresh before the app treats it as
 
 If you are unsure about the numbers, leave the defaults in place and only change them if you know the layout needs a different behavior.
 
-## 12. Working With the Canvas
+## 13. Working With the Canvas
 
 The canvas is grid-based, so a few habits make editing much easier:
 
@@ -390,7 +400,7 @@ The canvas is grid-based, so a few habits make editing much easier:
 
 The app saves the layout as a single layout definition, so changes to templates and changes to placed items are both part of the same saved work. After a save, the app returns you to monitor mode.
 
-## 13. Directional Conventions
+## 14. Directional Conventions
 
 These rules make layouts easier to read across the whole app.
 
@@ -408,7 +418,7 @@ These are conventions, not hard physics. Some layouts will not follow perfect ca
 ### Documentation Checkpoint
 Add the word "device" to the word from the earlier checkpoint. DM me that phrase on Discord to confirm that you have thoroughly read this documentation
 
-## 14. Common Workflows
+## 15. Common Workflows
 
 ### Add a New Track Segment
 
@@ -436,7 +446,7 @@ Add the word "device" to the word from the earlier checkpoint. DM me that phrase
 5. Save the template.
 6. Place instances of that template on the main layout.
 
-## 15. Quick Troubleshooting
+## 16. Quick Troubleshooting
 
 If something does not look right, check these first:
 
@@ -447,7 +457,7 @@ If something does not look right, check these first:
 - the stop signal values match what the layout expects
 - the item is not simply off the grid or overlapping something else
 
-## 16. Final Checks
+## 17. Final Checks
 
 Before you consider the layout done, verify:
 
