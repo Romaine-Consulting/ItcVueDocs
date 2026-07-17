@@ -18,7 +18,7 @@ After the server starts, open the app in the browser at `http://localhost:576`.
 2. Open the browser page.
 3. Use the layout drop-down in the top bar to choose the layout you want to view.
 
-That is the short version. In normal monitor mode you are mostly just selecting a layout and watching it update.
+In normal monitor mode you are mostly just selecting a layout and watching it update.
 
 ![Monitor mode screenshot](./images/layout-guide/monitor-mode.png)
 
