@@ -1,479 +1,136 @@
-# Layout Guide for Beta Testers
+# Layout Builder Guide
 
-This guide explains how to view layouts, enter the layout builder, create new layouts, place atoms, build templates, and map the live indexes that drive the UI.
+ItcVue's Layout Builder lets you create and maintain the diagram that appears in the monitor display. A layout is made from individual atoms, such as track and labels, plus reusable templates for more complex control points.
 
-## 1. Start the App
+## 1. Open a Layout
 
-If this is your first time opening the package:
+Start ItcVue and choose a layout from the selector in the top bar.
 
-1. Unzip the package.
-2. Open the extracted folder.
-3. Run `Server.exe`.
+The normal monitor view displays the selected layout and its live state.
 
-After the server starts, open the app in the browser at `http://localhost:576`.
+![Monitor mode](./images/layout-guide/monitor-mode.png)
 
-## 2. Open and Display a Layout
+## 2. Enter and Leave the Layout Builder
 
-1. Start the app.
-2. Open the browser page.
-3. Use the layout drop-down in the top bar to choose the layout you want to view.
+Select **Layout builder** in the top navigation. The selected layout opens in editing mode. The button becomes **Return to monitor** while the builder is open.
 
-In normal monitor mode you are mostly just selecting a layout and watching it update.
+Use **Save layout** when you are ready to keep your work. Saving updates the layout and returns you to monitor mode. Use **Close builder** or **Return to monitor** to leave without saving; unsaved draft edits are discarded.
 
-![Monitor mode screenshot](./images/layout-guide/monitor-mode.png)
+You can select another editable layout from the top selector while the builder is open. The builder stays open for the new layout, but you should save first if you want to retain the current draft.
 
-## 3. Enter Layout Builder
+![Entering the builder](./images/layout-guide/builder-entry.png)
 
-To edit the current layout, click `Layout builder` in the top bar.
+## 3. Create a New Layout
 
-To leave the builder, click `Close builder` in the builder header. You can also return to monitor mode with the top bar button labeled `Return to monitor` after entering builder mode.
+From **Layouts (Local)**, choose **New layout**, then enter a name and starting width and height. The new blank layout opens directly in the Layout Builder.
 
-![Layout builder entry screenshot](./images/layout-guide/builder-entry.png)
+Choose dimensions that give the diagram enough room to grow. You can expand a layout later from the settings panel.
 
-## 4. Start a New Layout
+## 4. Builder Overview
 
-While in the builder, click `New layout`.
+The builder has four main areas:
 
-The app will prompt for:
+- The **palette** contains atoms and available templates.
+- The **grid canvas** is the layout being built.
+- The **inspector** shows settings for the selected item or for the layout itself.
+- The top controls let you save, create a new layout, or close the builder.
 
-1. Layout name
-2. Canvas width in cells
-3. Canvas height in cells
+![Layout Builder overview](./images/layout-guide/builder-overview.png)
 
-After that, the new layout opens in monitor mode. You will need to enter `Layout builder` again before placing items.
+The grid is the coordinate system for a layout. Place items on cells rather than trying to position them by pixels.
 
-The new layout starts with the default signal stop values used by the app, and you can change them later in the layout settings panel.
+## 5. Place, Select, and Move Items
 
-## 5. Builder Basics
+Drag an atom or template from the palette to the canvas. During a drag, ItcVue shows a translucent preview that snaps to the grid cell where the item will be placed when released.
 
-The builder gives you three things:
+Select an item by clicking it. You can then change its settings in the inspector, drag it to another valid cell, or use the arrow keys to move it one cell at a time.
 
-- the palette for placing items
-- the canvas for arranging them
-- the inspector for changing the selected item
+To work with a group:
 
-The top bar gives you `Save layout`, `New layout`, and `Close builder`.
+- Hold Ctrl (or Command on macOS) while clicking items to add them to the selection.
+- Drag on empty canvas space to draw a selection rectangle around several items.
+- Drag the selected group or use the arrow keys to move it as a group.
 
-Save writes the current layout back to the server and returns you to monitor mode.
+The entire group stops when any selected item would leave the canvas. Items are not allowed to spill off the edge or pile up at the boundary.
 
-![Palette and canvas screenshot](./images/layout-guide/builder-overview.png)
+If track-like items occupy the same grid cell, the affected cell is highlighted in magenta. Treat that as a prompt to separate the overlapping pieces before saving.
 
-## 6. Place Main Layout Atoms
+Right-click an item or a group to copy it. Right-click a destination cell and choose **Paste**. The pasted group keeps its relative spacing. If the group cannot fit at that location, ItcVue leaves the layout unchanged and reports that the destination is invalid.
 
-The main layout builder lets you place these atom kinds directly on the canvas:
+## 6. Work with Common Atoms
 
-- `track`
-- `label`
-- `diagonal`
-- `angled`
-- `portal`
+The palette includes the basic parts used to construct a layout:
 
-If you need `switch-point`, `signal`, `crossing-45`, or `crossing-90`, put them in a template instead.
+- **Track** creates straight horizontal or vertical track. Set its length and rotation in the inspector.
+- **Label** adds station, control-point, or other text. Adjust its text, color, and offset in the inspector.
+- **Diagonal** and **angled** track create non-orthogonal rail geometry. Use rotation and flip controls to obtain the desired direction. The **Contain within cell** option keeps a compact diagonal or angled piece within its grid cell.
+- **Portal** connects named locations elsewhere in the layout. Give both sides the same portal name when they are intended to connect.
 
-There is a strict 1 track atom per grid square rule. Do not layer switch points, straight track, diagonal track, or angled track on the same grid square.
+Template instances contain more complex pieces such as switches, crossings, signals, and compound track arrangements.
 
-To place one:
+For manually entered values, the builder validates the input when you leave the field or press Enter. Canvas dimensions, positions, and track lengths use whole cells. Layout label offsets can use whole-cell or half-cell increments. Invalid values are not applied, and a straight track length is reduced automatically when necessary to keep it inside the canvas.
 
-1. Drag the atom from the palette.
-2. Drop it on the canvas.
-3. Select it if you want to change its placement fields in the inspector.
+## 7. Use Templates
 
-### Common Atom Types
+Templates are reusable groups of atoms. Adding a template instance to a layout is the normal way to place a repeated control point or track arrangement.
 
-- `track`: straight connected rail
-- `label`: free text on the layout
-- `diagonal`: a diagonal connector
-- `angled`: a corner connector
-- `portal`: a jump from one place to another
+The palette separates templates into two groups:
 
-### Atom Settings
+- **Standard templates** are supplied with ItcVue and are normally read-only.
+- **Custom templates** belong to the current layout and can be created or edited for layout-specific geometry.
 
-Atoms are placed on the canvas, and the inspector only shows the placement fields that are available for that atom kind.
+To add a template instance, drag it from the palette to the canvas. Select the instance to set its display name, WIU identifier, signal and switch counts, and other instance properties.
 
-#### Track
+Choose **New template** to make a custom template, or use the edit control beside a custom template in the palette to open the Template Editor.
 
-- `Rotation`
-- `Length`
-- `Block end left`
-- `Block end right`
+## 8. Edit a Custom Template
 
-#### Label
+The Template Editor opens over the Layout Builder, with its own palette, grid, and inspector. The underlying layout is visually de-emphasized so it is clear that you are editing template geometry.
 
-- `Text`
-- `Size`
-- `Color`
-- `Offset X`
-- `Offset Y`
+Add and arrange template atoms as you would normal layout atoms. Each atom has a **role**, such as `track-1` or `signal-2`. Roles must be unique within the template because template instances use them to associate live data and labels with the correct component.
 
-#### Diagonal
+Use the inspector to configure atom-specific options, including direction, track role, label text, and signal or switch information. Choose **Done** to return to the Layout Builder, then save the layout to keep the template definition.
 
-- `Flip`
+![Template Editor](./images/layout-guide/template-editor.png)
 
-#### Angled
+## 9. Connect Template Instances to Live Data
 
-- `Rotation`
+For a template instance that represents a real location, select it and enter its **WIU ID**. Set the number of signals and switches expected from that unit, then map the instance's template roles to the appropriate live signal and switch indexes.
 
-#### Portal
+You can paste a different WIU ID without counts changing immediately. This makes it practical to duplicate a similar instance, update the WIU ID, and then make any required address or count changes yourself.
 
-- `Pair ID`
+When instances sharing a WIU have incompatible packet counts, saving presents a review choice. Choose **Normalize and save** to make the shared counts consistent, or cancel the save and correct the instances manually.
 
-### Notes for Atom Fields
+In monitor mode, a magenta label means ItcVue is receiving packets for that WIU but cannot decode the configured mapping correctly. Check the instance's WIU, packet counts, and role-to-index mappings.
 
-- Position is always edited with `X` and `Y`.
-- Leaving a field blank removes the value where the UI allows that behavior.
+## 10. Adjust Layout Settings
 
-## 7. Move or Remove Placed Items
+With no item selected, use the layout settings panel to edit the layout name, width, height, and signal stop values.
 
-Select any item on the canvas to see its inspector fields.
+You can expand the canvas at any time. When reducing its width or height, ItcVue will not move or remove items. It stops at the smallest size that still contains every placed atom and template instance. If you type a smaller number manually, it is adjusted to that safe minimum.
 
-You can then:
+Signal stop values are comma-separated values used by the monitor display to determine where a route should stop. The standard values are usually appropriate unless the layout has a specific reason to change them.
 
-- change its `X` and `Y`
-- change its available placement fields
-- duplicate it
-- delete it
+## 11. Direction and Coordinates
 
-If you select multiple items, the inspector switches to bulk mode and shows `Delete all`.
+The builder uses railroad-style display coordinates:
 
-Helpful shortcuts:
+- X increases from left to right.
+- Y increases upward.
+- A track rotation of 0 is horizontal; 90 is vertical.
+- A signal's facing direction indicates the direction the signal protects or governs.
 
-- Use the arrow keys to move selected items by one grid cell.
-- Hold `Ctrl` or `Cmd` while selecting to add items to the current selection.
-- Right-click an item to open the context menu.
+For a typical eastbound route, place a right-facing signal to the left of the route it governs. For a westbound route, place a left-facing signal to the right of the route it governs. Verify directions in monitor mode using the expected signal and route behavior.
 
-The context menu typically offers:
+## 12. A Practical Workflow
 
-- `Select`
-- `Duplicate`
-- `Delete`
-- `Copy`
-- `Edit template` for custom template instances
+1. Create or open a local layout, then enter the builder.
+2. Set the canvas size large enough for the territory.
+3. Place basic track and labels, using the grid and drag preview for alignment.
+4. Add standard templates for common control points and custom templates for layout-specific arrangements.
+5. Configure each live template instance with its WIU ID, counts, and mappings.
+6. Check the canvas for magenta overlap cells and correct any unintended overlaps.
+7. Save the layout and review it in monitor mode.
+8. If labels are magenta in monitor mode, correct the affected instance's live-data mapping and save again.
 
-### Documentation Checkpoint
-Make a note of the word "wayside." You'll need it later.
-
-## 8. Use Templates
-
-Templates are reusable patterns that keep a control point together as one unit.
-
-In the builder palette, templates are listed under:
-
-- `Standard`
-- `Custom`
-
-You can drag a template chip onto the canvas to place a new template instance.
-
-### Standard Templates
-
-Standard templates are read only. They are built-in patterns such as:
-
-- `standard-left-up`
-- `standard-left-down`
-- `standard-right-up`
-- `standard-right-down`
-- `block-signal-pair`
-
-These are the best starting points for common control points and signal pairs.
-
-### Custom Templates
-
-Custom templates are patterns you create for a specific location.
-
-Use a custom template when several pieces should move together as one reusable unit.
-
-### Create a Custom Template
-
-1. Click `+ New template`.
-2. Enter a template name.
-3. The template editor opens.
-4. Add atoms to the template canvas.
-5. Adjust the atom fields in the template inspector.
-6. Click `Done` when you are finished.
-
-### Open a Custom Template for Editing
-
-You can open a custom template in a few ways:
-
-- click the edit icon on the template chip
-- double-click the template chip
-- click `Edit template` on a custom template instance in the inspector
-
-Standard templates are read only.
-
-## 9. Template Editor
-
-When you open a template, the builder shows a separate template editor overlay.
-
-This editor has:
-
-- its own canvas
-- its own palette row
-- its own inspector
-- `Delete template`
-- `Done`
-- `Back to layout`
-
-The template editor is where you build the reusable pattern itself, not the placed instance.
-
-### Template Editor Palette
-
-The template editor palette includes the atom types used to compose a template, including the ones that are not available in the main layout builder.
-
-The current UI focuses on:
-
-- `track`
-- `switch-point`
-- `signal`
-- `label`
-- `diagonal`
-- `angled`
-- `crossing-45`
-- `crossing-90`
-
-### Template Atom Settings
-
-Template atom fields are similar to normal atom fields, but they are role-based instead of packet-index-based.
-
-Every template atom has:
-
-- `Role`
-- `X`
-- `Y`
-
-Then the remaining fields depend on the atom kind.
-
-For template switch points, signals, and crossings, the editor exposes the fields needed to define the reusable pattern.
-
-For template signals, the editor uses `Track role` instead of `Signal index` or `Track ID`.
-
-For template labels, the editor uses the label text and placement fields. The visible label text can be supplied later by the placed template instance.
-
-### Template Editing Behavior
-
-- Select an atom to edit it.
-- Drag an atom to move it.
-- Use `Duplicate` to create another copy.
-- Use `Delete` to remove the selected template atom.
-- Use `Delete all` when you have multiple atoms selected.
-
-The editor keeps roles unique. When you duplicate an atom, the builder assigns a new role automatically.
-
-### Template Placement and Cleanup
-
-When you close the template editor, the builder normalizes the template position so the edited content stays anchored cleanly.
-
-That means you should not worry about the template drifting out of bounds while you edit it.
-
-![Template editor screenshot](./images/layout-guide/template-editor.png)
-
-## 10. Place Template Instances
-
-A template instance is a placed copy of a template on the main layout canvas.
-
-When you drop a template onto the canvas, the inspector shows fields for that instance.
-
-### Instance Settings
-
-The template instance inspector includes:
-
-- `Template`
-- `WIU`
-- `Packet signal count`
-- `Packet switch count`
-- `Signal indexes`
-- `Switch indexes`
-- `Labels`
-
-It may also show `Offset X` and `Offset Y` for template label placement.
-
-### What the Fields Mean
-
-- `Template` shows which reusable pattern this instance uses. In the current UI, this field is read-only after placement.
-- `WIU` is the device or control-point ID that the layout listens to.
-- `Packet signal count` defines how many signal packet slots the UI should consider for that instance.
-- `Packet switch count` defines how many switch packet slots the UI should consider for that instance.
-- `Signal indexes` maps template signal roles to packet positions.
-- `Switch indexes` maps template switch roles to packet positions.
-- `Labels` maps template label roles to visible text.
-
-### Building a New Instance
-
-When you place a template, the builder tries to prefill the mapping fields with `-1` for unassigned roles.
-
-That is intentional. It gives you a starting point without forcing a guess.
-
-## 11. Map Indexes
-
-Index mapping is what connects the visual layout to the live data stream.
-
-This is one of the most important parts of the builder.
-
-### Signal Indexes
-
-Signal indexes map template signal roles to the raw signal positions in the incoming data.
-
-Use the `Signal indexes` section to choose the number for each role.
-
-- `1` means first
-- `2` means second
-- `3` means third
-- and so on
-
-If a role is not used, leave it as `unassigned`.
-
-### Switch Indexes
-
-Switch indexes work the same way, but for switch packet positions.
-
-Use the `Switch indexes` section to map each switch role to the correct packet slot.
-
-### Label Texts
-
-Template label roles can be filled with custom text in the `Labels` section.
-
-This is how a reusable template can show different station names, DS numbers, or other labels each time it is placed.
-
-### Hover and Highlight Help
-
-When you focus an index field, the builder highlights the matching atom in the canvas. That makes it easier to confirm you mapped the right role.
-
-### Unassigned Values
-
-Use `-1` for a role that should not be connected to live packet data.
-
-That is normal for a template that contains an optional or unused role.
-
-## 12. Layout Settings
-
-When nothing is selected, the inspector shows the layout settings panel.
-
-These settings apply to the whole layout.
-
-### Name
-
-The layout name shown in the UI.
-
-### Width
-
-The number of grid cells across the canvas.
-
-### Height
-
-The number of grid cells tall the canvas is.
-
-### Grid lines
-
-Turns the editing grid on or off in the builder view.
-
-This is a viewing aid and is not meant to be a layout content setting.
-
-### Stop Signal Values
-
-This field controls which raw signal values should appear as stop or red values in the UI.
-
-Enter the values as a comma-separated list, for example:
-
-```text
-14, 15, 30
-```
-
-### Active timeout and Dim timeout
-
-The builder shows two minute-based timeout settings:
-
-- `Active timeout`
-- `Dim timeout`
-
-Use these to control how long live state stays fresh before the app treats it as stale and falls back to timeout behavior.
-
-If you are unsure about the numbers, leave the defaults in place and only change them if you know the layout needs a different behavior.
-
-## 13. Working With the Canvas
-
-The canvas is grid-based, so a few habits make editing much easier:
-
-- keep atoms aligned to the grid
-- use the grid lines while building
-- drag items only after selecting the right thing
-- use the context menu for copy, duplicate, and delete
-- watch the inspector as you move between layout items and templates
-
-The app saves the layout as a single layout definition, so changes to templates and changes to placed items are both part of the same saved work. After a save, the app returns you to monitor mode.
-
-## 14. Directional Conventions
-
-These rules make layouts easier to read across the whole app.
-
-- Signals should sit on the right side of the track in the direction of travel.
-
-- Westbound routes should read left on the page and go up to new rows as they go further west.
-- Eastbound routes should read right on the page and go down to new rows as they go further east.
-- Northbound routes should generally read upward on the page and go to the right as they go further north.
-- Southbound routes should generally read downward on the page and go to the left as they go further south.
-
-- Features that are not directly related to signaling or routing, such as unsignaled sidings or industrial spurs, should generally be left out. Include those only when they are important for understanding the layout.
-
-These are conventions, not hard physics. Some layouts will not follow perfect cardinal directions, and that is fine when the author makes a reasonable judgment call.
-
-### Documentation Checkpoint
-Add the word "device" to the word from the earlier checkpoint. DM me that phrase on Discord to confirm that you have thoroughly read this documentation
-
-## 15. Common Workflows
-
-### Add a New Track Segment
-
-1. Open the builder.
-2. Drag `track` onto the canvas.
-3. Set the length.
-4. Adjust block-end settings if needed.
-5. Move the track until it lines up with neighboring pieces.
-
-### Build a New Control Point from a Template
-
-1. Place a template instance.
-2. Set the `WIU`.
-3. Map each signal index.
-4. Map each switch index.
-5. Fill in the label text.
-6. Adjust offsets if the labels need a visual nudge.
-
-### Turn a Repeated Pattern Into a Custom Template
-
-1. Create a new custom template.
-2. Add the atoms that make up the repeated pattern.
-3. Assign clear, stable roles.
-4. Add switch points, signals, and crossings as needed.
-5. Save the template.
-6. Place instances of that template on the main layout.
-
-## 16. Quick Troubleshooting
-
-If something does not look right, check these first:
-
-- the layout or template was saved and then reopened
-- the WIU is correct
-- the signal and switch indexes are in the right order
-- the label text is mapped to the right role
-- the stop signal values match what the layout expects
-- the item is not simply off the grid or overlapping something else
-
-## 17. Final Checks
-
-Before you consider the layout done, verify:
-
-- the layout opens in monitor mode
-- the layout enters builder mode cleanly
-- any new layout saves without errors
-- every item has the correct position and field values
-- template instances have the correct WIU and index mapping
-- templates open and close correctly
-- labels are readable and do not cover nearby track
-- the layout still looks correct after saving and reloading
-
-If something looks wrong, the most common causes are:
-
-- a bad WIU
-- a signal or switch index mapped to the wrong number
-- an unintentional `-1`
-- a label that overlaps nearby items
-- a template edited without updating its placed instances
+Build in small, saved increments. It is much easier to verify a station or control point as it is added than to diagnose a large layout all at once.
