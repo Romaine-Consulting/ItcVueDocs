@@ -1,0 +1,17 @@
+{
+  "version": "1.0",
+  "railroad": "RAILROAD_NAME_HERE",
+  "ruleSets": {
+    "BNSF1": {
+      "name": "RULESET_NAME_HERE",
+      "aspects": {
+        "3": {
+          "name": "Clear",
+          "appearances": {
+            "1": ["G"]
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,95 @@
+{
+  "version": "1.0",
+  "railroad": "BNSF",
+  "ruleSets": {
+    "BNSF1": {
+      "name": "BNSF-1",
+      "aspects": {
+        "3": {
+          "name": "Clear",
+          "appearances": {
+            "1": ["G"]
+          }
+        },
+        "4": {
+          "name": "Approach Limited",
+          "appearances": {
+            "2": ["Y", "FG"]
+          }
+        },
+        "5": {
+          "name": "Advance Approach",
+          "appearances": {
+            "2": ["Y", "G"]
+          }
+        },
+        "6": {
+          "name": "Approach Medium",
+          "appearances": {
+            "1": ["FY"]
+          }
+        },
+        "7": {
+          "name": "Approach Restricting",
+          "appearances": {
+            "2": ["Y", "FR"]
+          }
+        },
+        "8": {
+          "name": "Approach",
+          "appearances": {
+            "1": ["Y"]
+          }
+        },
+        "9": {
+          "name": "Diverging Clear",
+          "appearances": {
+            "2": ["R", "G"]
+          }
+        },
+        "10": {
+          "name": "Diverging Approach Diverging",
+          "appearances": {
+            "3": ["R", "Y", "Y"]
+          }
+        },
+        "11": {
+          "name": "Diverging Approach Medium",
+          "appearances": {
+            "2": ["R", "FY"]
+          }
+        },
+        "12": {
+          "name": "Diverging Approach",
+          "appearances": {
+            "2": ["R", "Y"]
+          }
+        },
+        "13": {
+          "name": "Restricting",
+          "appearances": {
+            "1": ["FR"]
+          }
+        },
+        "14": {
+          "name": "Stop And Proceed",
+          "appearances": {
+            "1": ["R"]
+          }
+        },
+        "15": {
+          "name": "Stop",
+          "appearances": {
+            "1": ["R"]
+          }
+        },
+        "30": {
+          "name": "Dark",
+          "appearances": {
+            "1": ["D"]
+          }
+        }
+      }
+    }
+  }
+}
