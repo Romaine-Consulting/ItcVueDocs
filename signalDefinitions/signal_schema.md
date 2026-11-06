@@ -52,7 +52,7 @@ Create a JSON file named after the railroad (e.g., `BNSF.json`, `UP.json`, or `N
 
 ## 3. Defining signal appearances
 
-Each appearance uses a number (`"1"` through `"4"`) indicating the number of signal heads.
+Each appearance uses a number (`"1"` through `"3"`) indicating the number of signal heads.
 
 For example, Approach Medium:
 
