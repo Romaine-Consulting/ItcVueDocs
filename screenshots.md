@@ -57,7 +57,7 @@ All five Quick Start captures are complete and embedded in `quick-start.md`.
 
 | ID | Caption | Expected state | Planned file |
 | --- | --- | --- | --- |
-| IGW-01 | MCR channel discovery | Terminal with `mcr -a` showing active feeds; redact identifying machine details. | `images/igw-setup/igw-01-mcr-active-channels.png` |
-| IGW-02 | IGW configuration precedence | `local/igw.json` in program directory or startup output showing loaded config path. | `images/igw-setup/igw-02-local-config.png` |
-| IGW-03 | IGW startup endpoint | Startup output with loaded config path and publication endpoint; omit secrets. | `images/igw-setup/igw-03-igw-startup.png` |
-| IGW-04 | Local ItcVue connection status | Connections view with direct MCR and Aggregator disabled and ZMQ / IGW enabled. | `images/igw-setup/igw-04-local-connections.png` |
+| IGW-01 | ItcVue IGW key / JSON blob | Web app UI for creating an IGW upload key; redact the key value. | `images/igw-setup/igw-01-itcvue-key.png` |
+| IGW-02 | Servers tab with packet counts | ITCMON Servers tab (Name, IP, Port, Channel, Enabled, Packets) showing live Packets on active channels. | `images/igw-setup/igw-02-servers-packets.png` |
+| IGW-03 | `local/igw.json` placement | `local/igw.json` in the ITCMON folder; redact `zjout` key. | `images/igw-setup/igw-03-local-config.png` |
+| IGW-04 | IGW debug transfers | `igw.exe -D` output showing successful aggregator updates; redact keys and hosts if sensitive. | `images/igw-setup/igw-04-igw-debug.png` |

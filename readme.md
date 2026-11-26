@@ -8,5 +8,5 @@ Use these guides to get ItcVue running, read the monitor display, edit layouts, 
 2. [Layout Builder](layout-builder.md) — operate the builder, edit atoms and assemblies, and configure WIU packet mappings.
 3. [Designing and Building Layouts](layout-design.md) — apply readable territory, geometry, and labeling conventions and review submission readiness.
 4. [WIU Mapping and Troubleshooting (future)](wiu-mapping.md) — record field observations, map WIU data, interpret packets, and diagnose live behavior. 
-5. [IGW Setup (future)](igw-setup.md) — identify active MCR feeds and configure IGW's local input path.
+5. [IGW Setup](igw-setup.md) — create an ItcVue upload key, configure `local/igw.json`, match MCR channels, and pitch WIU data to the aggregator.
 
